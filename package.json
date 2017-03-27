@@ -9,7 +9,7 @@
     "build": "babel index.js -d bin --presets es2015,stage-1"
   },
   "bin": {
-    "ronodoc": "./bin/index.js"
+    "ronodoc-cli": "./bin/index.js"
   },
   "lint-staged": {
     "*.js": "eslint"
