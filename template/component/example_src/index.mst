@@ -1,0 +1,26 @@
+import React from 'react';
+
+/**
+ * # {{component.name}}
+ *
+ */
+class {{component.name}} extends React.Component {
+
+  static propTypes = {};
+
+  static get defaultProps() {
+    return {};
+  }
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>{`Hello {{component.name}}`}</div>
+    );
+  }
+}
+
+export default {{component.name}};

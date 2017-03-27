@@ -1,0 +1,21 @@
+import React from 'react';
+
+import {
+  {{component.name}}
+} from '{{component.package}}';
+
+/**
+ * # ExampleBase
+ */
+class ExampleBase extends React.Component {
+
+  render() {
+    return (
+      <div>
+        <{{component.name}} />
+      </div>
+    );
+  }
+}
+
+export default ExampleBase;
