@@ -48,6 +48,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *,cover
+.nyc_output
 
 # Translations
 *.mo
