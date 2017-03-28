@@ -1,3 +1,4 @@
+[![GitHub version](https://badge.fury.io/gh/bagoftrycks%2Fronodoc-cli.svg)](https://badge.fury.io/gh/bagoftrycks%2Fronodoc-cli)
 [![Build Status](https://travis-ci.org/bagoftrycks/ronodoc-cli.svg?branch=master)](https://travis-ci.org/bagoftrycks/ronodoc-cli)
 [![Coverage Status](https://coveralls.io/repos/github/bagoftrycks/ronodoc-cli/badge.svg?branch=master)](https://coveralls.io/github/bagoftrycks/ronodoc-cli?branch=master)
 [![dependencies Status](https://david-dm.org/bagoftrycks/ronodoc-cli/status.svg)](https://david-dm.org/bagoftrycks/ronodoc-cli)
