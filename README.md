@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/bagoftrycks/ronodoc-cli.svg?branch=master)](https://travis-ci.org/bagoftrycks/ronodoc-cli)
+[![Coverage Status](https://coveralls.io/repos/github/bagoftrycks/ronodoc-cli/badge.svg?branch=master)](https://coveralls.io/github/bagoftrycks/ronodoc-cli?branch=master)
 [![dependencies Status](https://david-dm.org/bagoftrycks/ronodoc-cli/status.svg)](https://david-dm.org/bagoftrycks/ronodoc-cli)
 [![devDependencies Status](https://david-dm.org/bagoftrycks/ronodoc-cli/dev-status.svg)](https://david-dm.org/bagoftrycks/ronodoc-cli?type=dev)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php)
