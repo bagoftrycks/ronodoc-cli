@@ -394,6 +394,7 @@ const _action_create = () => {
   const _port = program.port ? program.port : 3030;
   const _component = program.component;
 
+  /* eslint-disable max-len */
   if (_component) {
     if (_app === 'app') {
       const _crd = process.cwd();
@@ -401,18 +402,19 @@ const _action_create = () => {
 
       _create_component(
         _crd_split[_crd_split.length - 1],
-        _component.trim().toLowerCase().replace(/ /gi, '-')
+        _component.trim().toLowerCase().replace(/ /gi, '_').replace(/\-/gi, '_')
       );
     } else {
       _create_component(
-        _app,
-        _component.trim().toLowerCase().replace(/ /gi, '-')
+        _app.trim().toLowerCase().replace(/ /gi, '_').replace(/\-/gi, '_'),
+        _component.trim().toLowerCase().replace(/ /gi, '_').replace(/\-/gi, '_')
       );
     }
   } else {
-    _check_name(_app);
-    _create_pkg(_app, _host, _port);
+    _check_name(_app.trim().toLowerCase().replace(/ /gi, '_').replace(/\-/gi, '_'));
+    _create_pkg(_app.trim().toLowerCase().replace(/ /gi, '_').replace(/\-/gi, '_'), _host, _port);
   }
+  /* eslint-enable */
 };
 
 const _action = (_argument) => {
