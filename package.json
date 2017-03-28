@@ -1,7 +1,7 @@
 {
   "name": "ronodoc-cli",
   "version": "0.1.0-alpha-1",
-  "description": "Ronodoc is a CLI to bootstrap app that showcase components",
+  "description": "ronodoc-cli allows to bootstrap app that showcase UI components",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
