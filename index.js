@@ -260,6 +260,11 @@ const _create_component = (name, component) => {
     _path_template, 'component/example_page/ExampleBase.mst'
   );
 
+  /* eslint-disable max-len */
+  const _line_import = `import _${component.toLowerCase()} from './${component.toLowerCase()}';`;
+  const _line_export = `export const ${_data.component.name} = _${component.toLowerCase()};`;
+  /* eslint-enable */
+
   _data.component.nameLowerCase = _data.component.name.toLowerCase();
 
   fs.readFile(_ex_src_index, (err, data) => {
@@ -328,6 +333,51 @@ const _create_component = (name, component) => {
         `demo/src/pages/${component.toLowerCase()}/ExampleBase.js`
       ),
       _rendered
+    );
+  });
+
+  fs.ensureFileSync(path.join(_path_current, `src/index.js`));
+  fs.readFile(path.join(_path_current, `src/index.js`), (err, data) => {
+    if (err) {
+      throw err;
+    }
+
+    const _lines = data.toString().split('\n');
+
+    let _index_to_add_import;
+    let _index_to_add_export;
+
+    if (_lines.length === 1) {
+      _lines.splice(0, 0, _line_import);
+      _lines.splice(1, 0, _line_export);
+    } else {
+      for (let i = _lines.length - 1; i >= 0; i--) {
+        if (_lines[i].search(/^import/gi) !== -1) {
+          _index_to_add_import = i + 1;
+          break;
+        }
+      }
+
+      _lines.splice(_index_to_add_import, 0, _line_import);
+
+      for (let i = _lines.length - 1; i >= 0; i--) {
+        if (_lines[i].search(/^export/gi) !== -1) {
+          _index_to_add_export = i + 1;
+          break;
+        }
+      }
+
+      _lines.splice(_index_to_add_export, 0, _line_export);
+    }
+
+    fs.writeFile(
+      path.join(_path_current, `src/index.js`),
+      _lines.join('\n'),
+      (err) => {
+        if (err) {
+          throw err;
+        }
+      }
     );
   });
 };
