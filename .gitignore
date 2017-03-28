@@ -73,7 +73,7 @@ js/bundle.js
 js/bundle.min.js
 npm-debug.log
 _book
-demo/webpack.config.json
+webpack.config.json
 /app
 
 # Vagrant
