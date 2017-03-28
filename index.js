@@ -380,6 +380,72 @@ const _create_component = (name, component) => {
       }
     );
   });
+
+  fs.readFile(
+    path.join(_path_current, `demo/src/main.js`),
+    (err, data) => {
+      if (err) {
+        throw err;
+      }
+
+      const _lines = data.toString().split('\n');
+
+      let _index_ronodoc_end = _lines.map((line, index) => {
+        if (line.search(/\/\* ronodoc-import-end/) !== -1) {
+          return index;
+        }
+
+        return null;
+      }).filter((index) => {
+        return index;
+      });
+
+      if (_index_ronodoc_end.length) {
+        _index_ronodoc_end = _index_ronodoc_end[0];
+      }
+
+      /* eslint-disable max-len */
+      _lines.splice(
+        _index_ronodoc_end,
+        0,
+        `import ${_data.component.name} from './pages/${component.toLowerCase()}';`
+      );
+      /* eslint-enable */
+
+      let _index_ronodoc_route_end = _lines.map((line, index) => {
+        if (line.search(/\/\* ronodoc-route-end/) !== -1) {
+          return index;
+        }
+
+        return null;
+      }).filter((index) => {
+        return index;
+      });
+
+      if (_index_ronodoc_route_end.length) {
+        _index_ronodoc_route_end = _index_ronodoc_route_end[0];
+      }
+
+      _lines.splice(
+        _index_ronodoc_route_end,
+        0,
+        `      <Route
+          path="${component.toLowerCase()}"
+          component={${_data.component.name}}
+      />`
+      );
+
+      fs.writeFile(
+        path.join(_path_current, `demo/src/main.js`),
+        _lines.join('\n'),
+        (err) => {
+          if (err) {
+            throw err;
+          }
+        }
+      );
+    }
+  );
 };
 
 const _action_create = () => {
