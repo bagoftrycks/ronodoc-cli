@@ -27,7 +27,7 @@ const _indexOf = (array, search) => {
   }
 
   for (let i = array.length - 1; i >= 0; i--) {
-    if (array[i].search(search) !== -1) {
+    if (array[i].toString().search(search) !== -1) {
       _index = i;
       break;
     }
@@ -421,17 +421,21 @@ const _action = (_argument) => {
   _swith_action(_argument)();
 };
 
-program
-  .version(pkg.version)
-  .description('create new app to showcase your component')
-  .option('-a, --app [app]', 'set name of the application')
-  .option('-h, --host [host]', 'set webpack dev server hostname')
-  .option('-p, --port [port]', 'set webpacl dev server port')
-  .option('-c, --component [component]', 'set component name to create')
-  .arguments('<create>')
-  .action(_action)
-  .parse(process.argv);
+export const CLI = (process) => {
+  program
+    .version(pkg.version)
+    .description('create new app to showcase your component')
+    .option('-a, --app [app]', 'set name of the application')
+    .option('-h, --host [host]', 'set webpack dev server hostname')
+    .option('-p, --port [port]', 'set webpacl dev server port')
+    .option('-c, --component [component]', 'set component name to create')
+    .arguments('<create>')
+    .action(_action)
+    .parse(process.argv);
 
-if (!process.argv.slice(2).length) {
-  program.help();
-}
+  if (!process.argv.slice(2).length) {
+    program.help();
+  }
+};
+
+export const indexOf = _indexOf;
