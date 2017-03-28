@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/eslint index.js",
     "lint-staged": "lint-staged",
     "build": "babel index.js -d bin --presets es2015,stage-1"
   },
