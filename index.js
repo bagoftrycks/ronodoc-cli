@@ -11,6 +11,31 @@ import mustache from 'mustache';
 const __log = new Log('debug');
 const pkg = require('../package.json');
 
+const _indexOf = (array, search) => {
+  let _index = -1;
+
+  if (!array || !search) {
+    return;
+  }
+
+  if (Object.prototype.toString.call(array) !== '[object Array]') {
+    return;
+  }
+
+  if (search.constructor !== RegExp) {
+    return;
+  }
+
+  for (let i = array.length - 1; i >= 0; i--) {
+    if (array[i].search(search) !== -1) {
+      _index = i;
+      break;
+    }
+  }
+
+  return _index;
+};
+
 const _swith_action = (_action) => {
   const choices = {
     'create': _action_create,
@@ -23,9 +48,9 @@ const _swith_action = (_action) => {
 
 const _pre_run = (path_root, name, path_origin) => {
   const _template_core = 'template/core';
-  const _project_pkg = require(path.join(
-    path_root, 'package.json'
-  ));
+  const _path_origin_template_core = path.join(path_origin, _template_core);
+  const _path_root_pkg = path.join(path_root, 'package.json');
+  const _pkg_file = require(_path_root_pkg);
 
   const _classic_files = [
     '.eslintrc',
@@ -39,20 +64,20 @@ const _pre_run = (path_root, name, path_origin) => {
 
   __log.info('Copy template files');
 
-  fs.readdirSync(path.join(path_origin, _template_core)).forEach((file) => {
+  fs.readdirSync(_path_origin_template_core).forEach((file) => {
     fs.copySync(
-      path.join(path_origin, `${_template_core}/${file}`),
-      path.join(path_root, `${file}`)
+      path.join(_path_origin_template_core, file),
+      path.join(path_root, file)
     );
   });
 
   __log.info('Update package.json');
 
-  _project_pkg.main = 'lib/index.js';
-  _project_pkg.description = `${name} showcase`;
+  _pkg_file.main = 'lib/index.js';
+  _pkg_file.description = `${name} showcase`;
 
   /* eslint-disable max-len */
-  _project_pkg.scripts = {
+  _pkg_file.scripts = {
     'test': 'jest',
     'demo:run': 'NODE_ENV=development node ./demo/webpack.server.js',
     'demo:build': 'NODE_ENV=production ./node_modules/.bin/webpack -p --config ./demo/webpack.config.prod.js',
@@ -62,7 +87,7 @@ const _pre_run = (path_root, name, path_origin) => {
   };
   /* eslint-enable */
 
-  _project_pkg.devDependencies = {
+  _pkg_file.devDependencies = {
     'babel-cli': '^6.16.0',
     'babel-core': '^6.17.0',
     'babel-jest': '^16.0.0',
@@ -117,7 +142,7 @@ const _pre_run = (path_root, name, path_origin) => {
     'webpack-load-plugins': '^0.1.2',
   };
 
-  _project_pkg.dependencies = {
+  _pkg_file.dependencies = {
     'flexboxgrid': '^6.3.1',
     'material-ui': '^0.16.1',
     'react': '^15.3.2',
@@ -129,10 +154,7 @@ const _pre_run = (path_root, name, path_origin) => {
     'underscore': '^1.8.3',
   };
 
-  fs.writeFileSync(
-    path.join(path_root, 'package.json'),
-    JSON.stringify(_project_pkg, null, 2)
-  );
+  fs.writeFileSync(_path_root_pkg, JSON.stringify(_pkg_file, null, 2));
 
   __log.info('Create .babelrc file');
 
@@ -237,107 +259,65 @@ const _create_pkg = (name, host, port) => {
   _pre_run(_path_root, name, path.join(__dirname, '../'));
 };
 
-const _create_component = (name, component) => {
-  const _path_current = process.cwd();
-  const _path_template = path.join(__dirname, '../template');
+const _render_file = (source, path, obj) => {
+  fs.readFile(source, (err, data) => {
+    let _rendered;
+
+    if (err) {
+      return __log.error(err);
+    }
+
+    _rendered = mustache.render(data.toString(), obj);
+
+    fs.ensureFileSync(path);
+    fs.writeFileSync(path, _rendered);
+  });
+};
+
+const _create_component = (module, component) => {
+  const _path_root = process.cwd();
+  const _path_root_src = path.join(_path_root, 'src');
+  const _path_root_src_index = path.join(_path_root_src, 'index.js');
+  const _path_root_demo_src = path.join(_path_root, 'demo/src');
+  const _path_root_demo_src_main = path.join(_path_root, 'demo/src/main.js');
+  const _path_tpl = path.join(__dirname, '../template');
+  const _path_tpl_src = path.join(_path_tpl, 'component/example_src');
+  const _path_tpl_page = path.join(_path_tpl, 'component/example_page');
 
   const _data = {
     component: {
       name: component.charAt(0).toUpperCase() + component.slice(1),
-      package: name.toLowerCase(),
+      package: module,
     },
   };
 
-  const _ex_src_index = path.join(
-    _path_template, 'component/example_src/index.mst'
+  const _ex_src_index = path.join(_path_tpl_src, 'index.mst');
+  const _ex_page_index = path.join(_path_tpl_page, 'index.mst');
+  const _ex_page_base = path.join(_path_tpl_page, 'ExampleBase.mst');
+
+  const _line_import = `import _${component} from './${component}';`;
+  const _line_export = `export const ${_data.component.name} = _${component};`;
+
+  _render_file(
+    _ex_src_index,
+    path.join(_path_root_src, `${component}/index.js`),
+    _data
   );
 
-  const _page_index = path.join(
-    _path_template, 'component/example_page/index.mst'
+  _render_file(
+    _ex_page_index,
+    path.join(_path_root_demo_src, `pages/${component}/index.js`),
+    _data
   );
 
-  const _page_example = path.join(
-    _path_template, 'component/example_page/ExampleBase.mst'
+  _render_file(
+    _ex_page_base,
+    path.join(_path_root_demo_src, `pages/${component}/ExampleBase.js`),
+    _data
   );
 
-  /* eslint-disable max-len */
-  const _line_import = `import _${component.toLowerCase()} from './${component.toLowerCase()}';`;
-  const _line_export = `export const ${_data.component.name} = _${component.toLowerCase()};`;
-  /* eslint-enable */
-
-  _data.component.nameLowerCase = _data.component.name.toLowerCase();
-
-  fs.readFile(_ex_src_index, (err, data) => {
-    let _rendered;
-
-    if (err) {
-      return __log.error(err);
-    }
-
-    _rendered = mustache.render(data.toString(), _data);
-
-    fs.ensureFileSync(
-      path.join(_path_current, `src/${component.toLowerCase()}/index.js`)
-    );
-
-    fs.writeFileSync(
-      path.join(_path_current, `src/${component.toLowerCase()}/index.js`),
-      _rendered
-    );
-  });
-
-  fs.readFile(_page_index, (err, data) => {
-    let _rendered;
-
-    if (err) {
-      return __log.error(err);
-    }
-
-    _rendered = mustache.render(data.toString(), _data);
-
-    fs.ensureFileSync(
-      path.join(
-        _path_current,
-        `demo/src/pages/${component.toLowerCase()}/index.js`
-      )
-    );
-
-    fs.writeFileSync(
-      path.join(
-        _path_current,
-        `demo/src/pages/${component.toLowerCase()}/index.js`
-      ),
-      _rendered
-    );
-  });
-
-  fs.readFile(_page_example, (err, data) => {
-    let _rendered;
-
-    if (err) {
-      return __log.error(err);
-    }
-
-    _rendered = mustache.render(data.toString(), _data);
-
-    fs.ensureFileSync(
-      path.join(
-        _path_current,
-        `demo/src/pages/${component.toLowerCase()}/ExampleBase.js`
-      )
-    );
-
-    fs.writeFileSync(
-      path.join(
-        _path_current,
-        `demo/src/pages/${component.toLowerCase()}/ExampleBase.js`
-      ),
-      _rendered
-    );
-  });
-
-  fs.ensureFileSync(path.join(_path_current, `src/index.js`));
-  fs.readFile(path.join(_path_current, `src/index.js`), (err, data) => {
+  fs.ensureFileSync(_path_root_src_index);
+  fs.readFile(_path_root_src_index, (err, data) => {
     if (err) {
       throw err;
     }
@@ -351,81 +331,45 @@ const _create_component = (name, component) => {
       _lines.splice(0, 0, _line_import);
       _lines.splice(1, 0, _line_export);
     } else {
-      for (let i = _lines.length - 1; i >= 0; i--) {
-        if (_lines[i].search(/^import/gi) !== -1) {
-          _index_to_add_import = i + 1;
-          break;
-        }
+      _index_to_add_import = _indexOf(_lines, /^import/) + 1;
+      if (_index_to_add_import !== -1) {
+        _lines.splice(_index_to_add_import, 0, _line_import);
       }
 
-      _lines.splice(_index_to_add_import, 0, _line_import);
-
-      for (let i = _lines.length - 1; i >= 0; i--) {
-        if (_lines[i].search(/^export/gi) !== -1) {
-          _index_to_add_export = i + 1;
-          break;
-        }
+      _index_to_add_export = _indexOf(_lines, /^export/) + 1;
+      if (_index_to_add_export !== -1) {
+        _lines.splice(_index_to_add_export, 0, _line_export);
       }
-
-      _lines.splice(_index_to_add_export, 0, _line_export);
     }
 
-    fs.writeFile(
-      path.join(_path_current, `src/index.js`),
-      _lines.join('\n'),
-      (err) => {
-        if (err) {
-          throw err;
-        }
-      }
-    );
-  });
-
-  fs.readFile(
-    path.join(_path_current, `demo/src/main.js`),
-    (err, data) => {
+    fs.writeFile(_path_root_src_index, _lines.join('\n'), (err) => {
       if (err) {
         throw err;
       }
+    });
+  });
 
-      const _lines = data.toString().split('\n');
+  fs.readFile(_path_root_demo_src_main, (err, data) => {
+    if (err) {
+      throw err;
+    }
 
-      let _index_ronodoc_end = _lines.map((line, index) => {
-        if (line.search(/\/\* ronodoc-import-end/) !== -1) {
-          return index;
-        }
+    const _lines = data.toString().split('\n');
 
-        return null;
-      }).filter((index) => {
-        return index;
-      });
+    let _index_ronodoc_end;
+    let _index_ronodoc_route_end;
 
-      if (_index_ronodoc_end.length) {
-        _index_ronodoc_end = _index_ronodoc_end[0];
-      }
-
-      /* eslint-disable max-len */
+    _index_ronodoc_end = _indexOf(_lines, /\/\* ronodoc-import-end/);
+    if (_index_ronodoc_end !== -1) {
       _lines.splice(
         _index_ronodoc_end,
         0,
-        `import ${_data.component.name} from './pages/${component.toLowerCase()}';`
+        `import ${_data.component.name} from './pages/${component}';`
       );
-      /* eslint-enable */
+    }
 
-      let _index_ronodoc_route_end = _lines.map((line, index) => {
-        if (line.search(/\/\* ronodoc-route-end/) !== -1) {
-          return index;
-        }
-
-        return null;
-      }).filter((index) => {
-        return index;
-      });
-
-      if (_index_ronodoc_route_end.length) {
-        _index_ronodoc_route_end = _index_ronodoc_route_end[0];
-      }
-
+    _index_ronodoc_route_end = _indexOf(_lines, /\/\* ronodoc-route-end/);
+    if (_index_ronodoc_route_end !== -1) {
       _lines.splice(
         _index_ronodoc_route_end,
         0,
@@ -434,18 +378,14 @@ const _create_component = (name, component) => {
           component={${_data.component.name}}
       />`
       );
-
-      fs.writeFile(
-        path.join(_path_current, `demo/src/main.js`),
-        _lines.join('\n'),
-        (err) => {
-          if (err) {
-            throw err;
-          }
-        }
-      );
     }
-  );
+
+    fs.writeFile(_path_root_demo_src_main, _lines.join('\n'), (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+  });
 };
 
 const _action_create = () => {
@@ -455,7 +395,20 @@ const _action_create = () => {
   const _component = program.component;
 
   if (_component) {
-    _create_component(_app, _component);
+    if (_app === 'app') {
+      const _crd = process.cwd();
+      const _crd_split = _crd.split('/');
+
+      _create_component(
+        _crd_split[_crd_split.length - 1],
+        _component.trim().toLowerCase().replace(/ /gi, '-')
+      );
+    } else {
+      _create_component(
+        _app,
+        _component.trim().toLowerCase().replace(/ /gi, '-')
+      );
+    }
   } else {
     _check_name(_app);
     _create_pkg(_app, _host, _port);
