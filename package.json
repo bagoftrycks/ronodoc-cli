@@ -4,10 +4,10 @@
   "description": "ronodoc-cli allows to bootstrap app that showcase UI components",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha",
     "lint": "./node_modules/.bin/eslint index.js",
     "lint-staged": "lint-staged",
-    "build": "babel index.js -d bin --presets es2015,stage-1"
+    "build": "babel ./src -d ./bin --presets es2015,stage-1"
   },
   "bin": {
     "ronodoc-cli": "./bin/index.js"
@@ -24,10 +24,14 @@
     "babel-eslint": "^7.0.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-stage-1": "^6.16.0",
+    "coveralls": "^2.12.0",
     "eslint": "^3.18.0",
     "eslint-config-google": "^0.7.1",
     "eslint-plugin-react": "^6.10.3",
     "lint-staged": "^3.4.0",
+    "mocha": "^3.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^10.2.0",
     "pre-commit": "^1.2.2"
   },
   "dependencies": {
