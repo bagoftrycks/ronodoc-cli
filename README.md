@@ -1,3 +1,10 @@
+[![Build Status](https://travis-ci.org/bagoftrycks/ronodoc-cli.svg?branch=master)](https://travis-ci.org/bagoftrycks/ronodoc-cli)
+[![dependencies Status](https://david-dm.org/bagoftrycks/ronodoc-cli/status.svg)](https://david-dm.org/bagoftrycks/ronodoc-cli)
+[![devDependencies Status](https://david-dm.org/bagoftrycks/ronodoc-cli/dev-status.svg)](https://david-dm.org/bagoftrycks/ronodoc-cli?type=dev)
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php)
+[![NPM Version](https://img.shields.io/badge/npm-3.10.10-blue.svg)](https://img.shields.io/badge/npm-3.10.10-blue.svg)
+[![Node Version](https://img.shields.io/badge/node-v6.10.1-blue.svg)](https://img.shields.io/badge/node-v6.10.1-blue.svg)
+
 # Ronodoc CLI :tophat:
 
 A CLI to bootstrap app that **showcase UI components** and have your own UI set of components.
