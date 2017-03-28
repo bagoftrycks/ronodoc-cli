@@ -1,6 +1,6 @@
 {
   "name": "ronodoc-cli",
-  "version": "0.1.0-alpha-1",
+  "version": "0.1.0-alpha-2",
   "description": "ronodoc-cli allows to bootstrap app that showcase UI components",
   "main": "index.js",
   "scripts": {
