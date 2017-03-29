@@ -2,14 +2,17 @@
 
 ##### Chores
 
+* **package:**
+  * Adds repo url and changelog ([f661099a](https://github.com/bagoftrycks/ronodoc-cli/commit/f661099ad6d4368dac4923137e3dcd6a1aa302e4))
+  * Renames bin script ([c8fc4d6d](https://github.com/bagoftrycks/ronodoc-cli/commit/c8fc4d6d2f783b5eb4911223686c56a2c1bf72e9))
 * **travis:**
   * Updates script to include coveralls ([bafd3bec](https://github.com/bagoftrycks/ronodoc-cli/commit/bafd3bec7fa9c9fb241218f68dc8783a49fe26d8))
   * Adds conf ([f943423f](https://github.com/bagoftrycks/ronodoc-cli/commit/f943423fa518a0d688a99552bd751c22a100f6e6))
 * **cli:** Moves to src folder ([c0032095](https://github.com/bagoftrycks/ronodoc-cli/commit/c0032095601cc7b709bafe94f565e41a4d3af8e7))
-* **package:** Renames bin script ([c8fc4d6d](https://github.com/bagoftrycks/ronodoc-cli/commit/c8fc4d6d2f783b5eb4911223686c56a2c1bf72e9))
 
 ##### Documentation Changes
 
+* **changelog:** Adds default based on generate-changelog ([58d1e04b](https://github.com/bagoftrycks/ronodoc-cli/commit/58d1e04b3deff702af2fb6e4c5bc3c85eb58520f))
 * **readme:**
   * Updates ([5bf2bc42](https://github.com/bagoftrycks/ronodoc-cli/commit/5bf2bc42d62fed4bd812b3ef1adaaec9d0c1fdde))
   * Adds some badge ([21b84d14](https://github.com/bagoftrycks/ronodoc-cli/commit/21b84d146744330335bd5889e0fdf03b2837c8bc))
