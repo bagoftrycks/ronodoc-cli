@@ -1,4 +1,4 @@
-#### 0.1.0-alpha-3 (2017-3-29)
+#### 0.1.0-alpha-4 (2017-3-29)
 
 ##### Chores
 
@@ -12,7 +12,9 @@
 
 ##### Documentation Changes
 
-* **changelog:** Adds default based on generate-changelog ([58d1e04b](https://github.com/bagoftrycks/ronodoc-cli/commit/58d1e04b3deff702af2fb6e4c5bc3c85eb58520f))
+* **changelog:**
+  * Updates ([c0da34ca](https://github.com/bagoftrycks/ronodoc-cli/commit/c0da34ca679b6dffd59a7d0d9917fcba02207f6a))
+  * Adds default based on generate-changelog ([58d1e04b](https://github.com/bagoftrycks/ronodoc-cli/commit/58d1e04b3deff702af2fb6e4c5bc3c85eb58520f))
 * **readme:**
   * Updates ([5bf2bc42](https://github.com/bagoftrycks/ronodoc-cli/commit/5bf2bc42d62fed4bd812b3ef1adaaec9d0c1fdde))
   * Adds some badge ([21b84d14](https://github.com/bagoftrycks/ronodoc-cli/commit/21b84d146744330335bd5889e0fdf03b2837c8bc))
@@ -22,6 +24,7 @@
 
 ##### New Features
 
+* **0.1.0-alpha-4:** Releases ([88c02a2d](https://github.com/bagoftrycks/ronodoc-cli/commit/88c02a2d5f08da89e406d210bc400003ca1a5d81))
 * **0.1.0-alpha-2:** Releases ([e60e4c16](https://github.com/bagoftrycks/ronodoc-cli/commit/e60e4c16a0b210a2afa997a8a1a096c7b24dc032))
 * **travis:**
   * Adds Github version badge ([7519d54c](https://github.com/bagoftrycks/ronodoc-cli/commit/7519d54c5af01d6ae20ace412ef40853abe51342))
