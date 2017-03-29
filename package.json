@@ -1,6 +1,6 @@
 {
   "name": "ronodoc-cli",
-  "version": "0.1.0-alpha-2",
+  "version": "0.1.0-alpha-3",
   "description": "ronodoc-cli allows to bootstrap app that showcase UI components",
   "main": "index.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "eslint": "^3.18.0",
     "eslint-config-google": "^0.7.1",
     "eslint-plugin-react": "^6.10.3",
-    "generate-changelog": "^1.1.0",
+    "generate-changelog": "git+ssh://git@github.com/bagoftrycks/generate-changelog.git",
     "lint-staged": "^3.4.0",
     "mocha": "^3.2.0",
     "mocha-lcov-reporter": "^1.3.0",
