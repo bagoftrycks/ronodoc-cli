@@ -6,7 +6,7 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha",
     "coveralls": "./node_modules/.bin/nyc npm test && ./node_modules/.bin/nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls",
-    "lint": "./node_modules/.bin/eslint index.js",
+    "lint": "./node_modules/.bin/eslint ./src/*.js",
     "lint-staged": "lint-staged",
     "build": "babel ./src -d ./bin --presets es2015,stage-1"
   },
