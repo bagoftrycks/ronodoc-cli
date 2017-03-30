@@ -1,3 +1,10 @@
+#### 0.1.1-alpha-4 (2017-3-30)
+
+##### Bug Fixes
+
+* **package:** Corrects lint script ([ff9c0311](https://github.com/bagoftrycks/ronodoc-cli/commit/ff9c0311a68c3d3bf2a755081f3f4cc87a50f252))
+* **cli:** Corrects spelling module, import etc ([20b62cfc](https://github.com/bagoftrycks/ronodoc-cli/commit/20b62cfcb4bd6d24b4ef4d49fa942c6bf7d2aa28))
+
 #### 0.1.0-alpha-4 (2017-3-29)
 
 ##### Chores
