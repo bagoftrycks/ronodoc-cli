@@ -286,7 +286,10 @@ const _create_component = (module, component) => {
 
   const _data = {
     component: {
-      name: component.charAt(0).toUpperCase() + component.slice(1),
+      original: component,
+      name: component.split('-').map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      }).join(''),
       package: module,
     },
   };
@@ -295,8 +298,10 @@ const _create_component = (module, component) => {
   const _ex_page_index = path.join(_path_tpl_page, 'index.mst');
   const _ex_page_base = path.join(_path_tpl_page, 'ExampleBase.mst');
 
-  const _line_import = `import _${component} from './${component}';`;
-  const _line_export = `export const ${_data.component.name} = _${component};`;
+  const _line_import = `import _${_data.component.name} from './${component}';`;
+  /* eslint-disable max-len */
+  const _line_export = `export const ${_data.component.name} = _${_data.component.name};`;
+  /* eslint-enable */
 
   _render_file(
     _ex_src_index,
@@ -374,7 +379,7 @@ const _create_component = (module, component) => {
         _index_ronodoc_route_end,
         0,
         `      <Route
-          path="${component.toLowerCase()}"
+          path="${component}"
           component={${_data.component.name}}
       />`
       );
@@ -402,17 +407,17 @@ const _action_create = () => {
 
       _create_component(
         _crd_split[_crd_split.length - 1],
-        _component.trim().toLowerCase().replace(/ /gi, '_').replace(/\-/gi, '_')
+        _component.trim().toLowerCase().replace(/ /gi, '-')
       );
     } else {
       _create_component(
-        _app.trim().toLowerCase().replace(/ /gi, '_').replace(/\-/gi, '_'),
-        _component.trim().toLowerCase().replace(/ /gi, '_').replace(/\-/gi, '_')
+        _app.trim().toLowerCase().replace(/ /gi, '-'),
+        _component.trim().toLowerCase().replace(/ /gi, '-')
       );
     }
   } else {
-    _check_name(_app.trim().toLowerCase().replace(/ /gi, '_').replace(/\-/gi, '_'));
-    _create_pkg(_app.trim().toLowerCase().replace(/ /gi, '_').replace(/\-/gi, '_'), _host, _port);
+    _check_name(_app.trim().toLowerCase().replace(/ /gi, '-'));
+    _create_pkg(_app.trim().toLowerCase().replace(/ /gi, '-'), _host, _port);
   }
   /* eslint-enable */
 };

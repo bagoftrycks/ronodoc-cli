@@ -16,6 +16,9 @@ import {
 
 import App from './components/app';
 
+/* ronodoc-import-start: DO NOT REMOVE */
+/* ronodoc-import-end */
+
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
@@ -33,7 +36,8 @@ render((
         component={App}
         path="/"
     >
-      {/* Route, IndexRoute, Redirect should be describe here */}
+      {/* ronodoc-route-start: DO NOT REMOVE */}
+      {/* ronodoc-route-end */}
     </Route>
   </Router>
 ), document.getElementById('app'));
