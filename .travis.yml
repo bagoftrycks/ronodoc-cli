@@ -1,8 +1,11 @@
 language: node_js
 sudo: false
 install:
-  - npm install
+- npm install
 script: npm run lint && npm run build && npm run coveralls
 branches:
   only:
-    - master
+  - master
+notifications:
+  slack:
+    secure: WssVd1EwIPggAcCoHB8NMy3UsMZbXqPtiwTrFkrBv3PWoqsNUZrfokkwj+K6JKkiuj+cQZSSmRwFBnLgHwzIHfW9+dj3jXw1HO4kZAXMNLemQlo3ogiFK9fNy1tQgN1rPzZGS9dm6Rp6Xz4isIQCHnKFhRJGUcuAKAJUqhRQqgmDGsicC1cEXjc+vP5fmsDH5Cnap10tT64BBos+vuextWLOXmLppR4JGTSpwMl1pt8y1q7BdUHfVzniRho9UBkdUSe5cPhWUenYY2YvKyXJ16d3RPBLmPbe3qrQd/FN4QEFuEqzHbdkmujPTX1qHvx6ZJ3q7ssOqCa0Wlc19IZGqHgHXqYRB9stxh3ORpfCbXE8lQOtcqu7UO6LFmkihlvVNkjYKvWpxcVUnVMpQHVy5GO9E/8+EmQGNxsQ7ke2MotzEaC+/8NmZtVmLQMONCbM/u8ZEOlftyKqwf5LMWtBFOS5QUzh6HIyhiH7wFVB50+GQ05MENHW9tt96aUSJQlx5OvPwHrY8SeUZP2AVYPjJwtL4V+t+g48LeJlilxb3ZryYGg2X9I/fmJW1xfpW0V9o4FRWWgDECHssO60mZXuo5ztTP6HSpnXRM1CYMkXl5cOiHVpAuyh7TVDLs0MP6xA35fsivuuR7DuxWNd+efKIbhW2Jz5r9hw1tm09NW7hTA=
